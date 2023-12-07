@@ -1,0 +1,72 @@
+Certificate:
+    Data:
+        Version: 1 (0x0)
+        Serial Number:
+            08:96:f8:6c:a9:be:92:76:18:e1:3d:d2:13:54:6d:48:b0:59:88:57
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C = RU, ST = Moskovskaya oblast', L = Volokolamsk, O = Home, OU = IT, CN = *.home.me
+        Validity
+            Not Before: Dec  7 12:31:33 2023 GMT
+            Not After : Dec  6 12:31:33 2024 GMT
+        Subject: C = RU, ST = Moskovskaya oblast', L = Volokolamsk, O = Home, OU = IT, CN = postgres
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:a0:4c:4d:5d:3b:c3:be:ec:ed:14:bc:33:1d:7e:
+                    de:06:d1:ec:91:f8:8d:fe:e3:85:59:07:70:de:77:
+                    55:b1:5a:3d:c9:04:31:f8:c2:da:44:70:00:07:ac:
+                    83:22:15:4c:d2:fb:c0:5f:9c:9d:eb:0e:b0:37:e4:
+                    1d:e0:9b:ee:7c:a4:86:f5:e7:b3:d6:84:80:b6:90:
+                    c4:ae:c7:c1:51:9e:d5:69:5a:94:74:95:3d:f8:3c:
+                    c8:6d:fa:17:01:aa:fa:02:89:66:30:89:0d:e1:b1:
+                    fa:63:d1:6e:7b:52:f9:be:73:47:51:a0:b1:85:0f:
+                    ce:1e:95:dc:54:8a:08:2a:f5:7e:4e:b2:e6:bd:2e:
+                    99:ac:21:be:3d:14:60:02:5f:67:3f:17:5e:93:6c:
+                    1f:bd:2a:3d:a6:c0:1e:dc:52:96:c5:d7:7b:aa:e1:
+                    0b:c6:7e:f6:3b:84:cb:3e:49:bf:0f:fb:1f:49:c8:
+                    a7:6b:51:1f:39:ef:fa:22:fd:3e:69:07:05:07:26:
+                    14:3e:6f:70:a5:30:c1:52:3f:35:eb:35:2d:f4:a5:
+                    5d:ed:90:d1:43:2b:d5:85:d9:3a:b9:2f:7a:13:74:
+                    1d:80:ae:fb:b7:4b:53:80:79:d2:de:de:cb:34:06:
+                    95:fc:98:a0:56:8a:15:fc:62:38:39:b8:38:bb:f0:
+                    89:53
+                Exponent: 65537 (0x10001)
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        31:fb:30:22:56:8c:63:b0:d5:37:3e:3d:eb:1d:b4:da:11:3f:
+        88:83:59:76:0a:72:42:db:63:8e:34:0f:1d:a3:94:81:1f:5b:
+        b3:6e:8a:07:41:8e:dd:ad:17:5a:a1:4a:e7:0b:ae:02:30:ba:
+        06:1e:36:76:56:18:2a:cf:cd:c4:ea:c0:2f:5b:47:cd:66:d0:
+        45:60:df:f4:7f:6c:b9:a8:3b:6d:1d:36:74:7b:6e:cc:29:b3:
+        30:12:da:4f:e3:43:41:1e:35:11:60:76:d0:8f:34:ee:5d:7a:
+        1e:68:c7:ff:dd:6d:89:60:9a:64:06:1f:4c:4f:8b:9b:42:54:
+        56:cb:c1:e1:1d:b1:c9:0f:28:eb:51:d8:9a:4e:7d:25:3a:e1:
+        f3:5f:cb:4f:33:8c:0d:1a:cd:5f:17:e2:88:55:62:36:c1:1c:
+        20:cb:75:0c:91:ae:21:37:5b:93:ba:ab:86:55:0b:dc:f5:d3:
+        e5:9a:6c:4f:ba:44:5c:7d:b5:e4:3f:78:b8:3e:8e:11:80:9a:
+        a8:1b:db:e5:fc:b8:53:71:ef:3b:29:b4:a8:82:50:7e:c4:f4:
+        ce:23:dc:5f:70:d9:4e:bb:4a:f1:5d:e5:bb:c7:6e:73:86:5f:
+        2a:70:89:db:1e:30:85:d1:c9:40:05:b2:8c:a2:6e:ce:16:2c:
+        96:63:c9:1c
+-----BEGIN CERTIFICATE-----
+MIIDaDCCAlACFAiW+GypvpJ2GOE90hNUbUiwWYhXMA0GCSqGSIb3DQEBCwUAMHEx
+CzAJBgNVBAYTAlJVMRwwGgYDVQQIDBNNb3Nrb3Zza2F5YSBvYmxhc3QnMRQwEgYD
+VQQHDAtWb2xva29sYW1zazENMAsGA1UECgwESG9tZTELMAkGA1UECwwCSVQxEjAQ
+BgNVBAMMCSouaG9tZS5tZTAeFw0yMzEyMDcxMjMxMzNaFw0yNDEyMDYxMjMxMzNa
+MHAxCzAJBgNVBAYTAlJVMRwwGgYDVQQIDBNNb3Nrb3Zza2F5YSBvYmxhc3QnMRQw
+EgYDVQQHDAtWb2xva29sYW1zazENMAsGA1UECgwESG9tZTELMAkGA1UECwwCSVQx
+ETAPBgNVBAMMCHBvc3RncmVzMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAoExNXTvDvuztFLwzHX7eBtHskfiN/uOFWQdw3ndVsVo9yQQx+MLaRHAAB6yD
+IhVM0vvAX5yd6w6wN+Qd4JvufKSG9eez1oSAtpDErsfBUZ7VaVqUdJU9+DzIbfoX
+Aar6AolmMIkN4bH6Y9Fue1L5vnNHUaCxhQ/OHpXcVIoIKvV+TrLmvS6ZrCG+PRRg
+Al9nPxdek2wfvSo9psAe3FKWxdd7quELxn72O4TLPkm/D/sfScina1EfOe/6Iv0+
+aQcFByYUPm9wpTDBUj816zUt9KVd7ZDRQyvVhdk6uS96E3QdgK77t0tTgHnS3t7L
+NAaV/JigVooV/GI4Obg4u/CJUwIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQAx+zAi
+VoxjsNU3Pj3rHbTaET+Ig1l2CnJC22OONA8do5SBH1uzbooHQY7drRdaoUrnC64C
+MLoGHjZ2Vhgqz83E6sAvW0fNZtBFYN/0f2y5qDttHTZ0e27MKbMwEtpP40NBHjUR
+YHbQjzTuXXoeaMf/3W2JYJpkBh9MT4ubQlRWy8HhHbHJDyjrUdiaTn0lOuHzX8tP
+M4wNGs1fF+KIVWI2wRwgy3UMka4hN1uTuquGVQvc9dPlmmxPukRcfbXkP3i4Po4R
+gJqoG9vl/LhTce87KbSoglB+xPTOI9xfcNlOu0rxXeW7x25zhl8qcInbHjCF0clA
+BbKMom7OFiyWY8kc
+-----END CERTIFICATE-----
