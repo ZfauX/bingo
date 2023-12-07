@@ -1,0 +1,9 @@
+student_email: pincester@yandex.ru
+postgres_cluster:
+  hosts:
+  - address: db1.home.me
+    port: 5432
+  user: postgres
+  db_name: postgres
+  ssl_mode: verify-full
+  use_closest_node: true
