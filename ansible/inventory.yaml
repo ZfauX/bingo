@@ -1,0 +1,8 @@
+aplications:
+    hosts:
+        ip1:
+        ip2:
+databases:
+    hosts:
+        ip1:
+        ip2:
