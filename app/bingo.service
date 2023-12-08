@@ -1,0 +1,18 @@
+[Unit]
+Description=Bingo daemon 
+After=network.target
+
+[Service]
+Type=simple
+WatchdogSec=20
+NotifyAccess=all
+WorkingDirectory=/home/ubuntu/bingo/app/
+ExecStart=/home/ubuntu/bingo/app/bingo run_server
+ExecStartPost=/opt/app/bin/watchdog.sh
+ExecReload=/bin/kill -s HUP $MAINPID
+RestartSec=5
+Restart=always
+OOMPolicy=continue
+
+[Install]
+WantedBy=multi-user.target
