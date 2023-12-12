@@ -110,24 +110,94 @@ resource "yandex_compute_instance_group" "app" {
   }
 }
 
+
+resource "yandex_compute_instance_group" "db" {
+  name                = "bingo-db"
+  folder_id           = local.folder_id
+  service_account_id  = yandex_iam_service_account.service-accounts["bingo-app"].id
+  deletion_protection = false
+  instance_template {
+    platform_id = "standard-v2"
+    resources {
+      cores         = 2
+      memory        = 1
+      core_fraction = 5
+    }
+    scheduling_policy {
+      preemptible = true
+    }
+    boot_disk {
+      mode = "READ_WRITE"
+      initialize_params {
+        type = "network-hdd"
+        image_id = data.yandex_compute_image.default.id
+        size     = "30"
+      }
+    }
+    network_interface {
+      network_id = "${yandex_vpc_network.default.id}"
+      subnet_ids = ["${yandex_vpc_subnet.default.id}"]
+      nat = true
+    }
+  
+    metadata = {
+      ssh-keys = "ubuntu:${file("C:\\Users\\TH\\.ssh\\id_ed25519.pub")}"
+    }
+    network_settings {
+      type = "STANDARD"
+    }
+  }
+
+  scale_policy {
+    fixed_scale {
+      size = 2
+    }
+  }
+
+  allocation_policy {
+    zones = ["ru-central1-a"]
+  }
+
+  deploy_policy {
+    max_unavailable = 1
+    max_creating    = 1
+    max_expansion   = 1
+    max_deleting    = 1
+  }
+}
+
 resource "yandex_lb_network_load_balancer" "default" {
   name = "app"
   type = "external"
   deletion_protection = "false"
   listener {
-    name = "my-listener"
-    port = 8080
+    name = "http-bingo"
+    port = 80
     external_address_spec {
       ip_version = "ipv4"
     }
+  listener {
+    name = "https-bingo"
+    port = 443
+    external_address_spec {
+      ip_version = "ipv4"
+
   }
   attached_target_group {
     target_group_id = "${yandex_compute_instance_group.app.load_balancer[0].target_group_id}"
   }
 }
+
 output "instance_external_ip_app" {
   value = yandex_compute_instance_group.app.instances.*.network_interface.0.nat_ip_address
 }
 output "instance_internal_ip_app" {
   value = yandex_compute_instance_group.app.instances.*.network_interface.0.ip_address
+}
+
+output "instance_external_ip_db" {
+  value = yandex_compute_instance_group.db.instances.*.network_interface.0.nat_ip_address
+}
+output "instance_internal_ip_db" {
+  value = yandex_compute_instance_group.db.instances.*.network_interface.0.ip_address
 }
