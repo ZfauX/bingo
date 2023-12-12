@@ -176,18 +176,25 @@ resource "yandex_lb_network_load_balancer" "default" {
     external_address_spec {
       ip_version = "ipv4"
     }
+  }
   listener {
     name = "https-bingo"
     port = 443
     external_address_spec {
       ip_version = "ipv4"
-
+    }
   }
   attached_target_group {
     target_group_id = "${yandex_compute_instance_group.app.load_balancer[0].target_group_id}"
+    healthcheck {
+      name = "http"
+      http_options {
+        port = 80
+        path = "/ping"
+      }
+    }
   }
 }
-
 output "instance_external_ip_app" {
   value = yandex_compute_instance_group.app.instances.*.network_interface.0.nat_ip_address
 }
