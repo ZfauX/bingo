@@ -1,9 +1,9 @@
 student_email: pincester@yandex.ru
 postgres_cluster:
   hosts:
-  - address: db1.home.me
+  - address: db1.local
     port: 5432
-  - address: db2.home.me
+  - address: db2.local
     port: 5432 
   user: postgres
   db_name: postgres
