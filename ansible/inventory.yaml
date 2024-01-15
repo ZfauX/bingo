@@ -1,8 +1,8 @@
 aplications:
     hosts:
-        ip1:
-        ip2:
+        app-01.local:
+        app-02.local:
 databases:
     hosts:
-        ip1:
-        ip2:
+        db-01.local:
+        db-01.local:
