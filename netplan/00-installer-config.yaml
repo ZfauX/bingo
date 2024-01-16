@@ -1,0 +1,8 @@
+network:
+  ethernets:
+    enp0s3:
+      dhcp4: true
+      routes:
+        - to: 8.8.8.8
+          type: blackhole
+  version: 2
