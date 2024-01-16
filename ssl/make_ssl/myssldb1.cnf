@@ -2,4 +2,4 @@
 subjectAltName = @alt_names
 
 [ alt_names ]
-DNS.1 = db1.home.me
+DNS.1 = db-01.local
