@@ -22,15 +22,15 @@ chmod og-rwx server2.key
 openssl x509 -req -in server2.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out server2.crt -extfile myssldb2.cnf -extensions req_ext
 
 # Private key generation for the client №1
-openssl req -new -nodes -text -out postgresql.csr -keyout postgresql.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
-chmod og-rwx postgresql.key
+openssl req -new -nodes -text -out postgresql1.csr -keyout postgresql1.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
+chmod og-rwx postgresql1.key
 
 # Certificate generation for the client №1
 openssl x509 -req -in postgresql1.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql1.crt
 
 # Private key generation for the client №2
-openssl req -new -nodes -text -out postgresql.csr -keyout postgresql.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
-chmod og-rwx postgresql.key
+openssl req -new -nodes -text -out postgresql2.csr -keyout postgresql2.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
+chmod og-rwx postgresql2.key
 
 # Certificate generation for the client №2
 openssl x509 -req -in postgresql2.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql2.crt
