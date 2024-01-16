@@ -26,11 +26,11 @@ openssl req -new -nodes -text -out postgresql.csr -keyout postgresql.key -subj "
 chmod og-rwx postgresql.key
 
 # Certificate generation for the client №1
-openssl x509 -req -in postgresql.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql.crt
+openssl x509 -req -in postgresql1.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql1.crt
 
 # Private key generation for the client №2
 openssl req -new -nodes -text -out postgresql.csr -keyout postgresql.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
 chmod og-rwx postgresql.key
 
 # Certificate generation for the client №2
-openssl x509 -req -in postgresql.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql.crt
+openssl x509 -req -in postgresql2.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql2.crt
