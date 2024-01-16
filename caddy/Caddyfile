@@ -1,0 +1,61 @@
+# Global Option Block
+{
+	auto_https disable_redirects
+	servers {
+		metrics
+	}
+}
+
+:443 {
+	route {
+		handle_path /long_dummy {
+			reverse_proxy :8080
+		}
+		reverse_proxy * app-01.local:30164 app-02.local:30164 {
+			lb_policy least_conn
+			lb_try_duration 5s
+			health_uri /ping
+			health_interval 1s
+			health_timeout 1s
+			health_body pong
+		}
+	}
+	tls internal {
+		on_demand
+	}
+	log {
+		output file ~/bingo/caddy/logs/https.log
+	}
+	encode zstd gzip
+}
+
+:80 {
+	route {
+		handle_path /long_dummy {
+			reverse_proxy :8080
+		}
+		reverse_proxy * app-01.local:30164 app-02.local:30164 {
+			lb_policy least_conn
+			lb_try_duration 5s
+			health_uri /ping
+			health_interval 1s
+			health_timeout 1s
+			health_body pong
+		}
+	}
+	log {
+		output file ~/bingo/caddy/logs/http.log
+	}
+	encode zstd gzip
+}
+
+:8080 {
+	header Cache-control "public"
+	header Content-type "application/json"
+	root * ~/bingo/caddy/cache_html
+	file_server
+	log {
+		output file ~/bingo/caddy/logs/cache.log
+	}
+	encode zstd gzip
+}
