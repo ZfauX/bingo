@@ -54,7 +54,7 @@ resource "yandex_compute_instance_group" "app" {
   name                = "bingo-app"
   folder_id           = local.folder_id
   service_account_id  = yandex_iam_service_account.service-accounts["bingo-app"].id
-  deletion_protection = false
+  deletion_protection = true
   instance_template {
     platform_id = "standard-v2"
     resources {
@@ -115,7 +115,7 @@ resource "yandex_compute_instance_group" "db" {
   name                = "bingo-db"
   folder_id           = local.folder_id
   service_account_id  = yandex_iam_service_account.service-accounts["bingo-app"].id
-  deletion_protection = false
+  deletion_protection = true
   instance_template {
     platform_id = "standard-v2"
     resources {
@@ -169,7 +169,7 @@ resource "yandex_compute_instance_group" "db" {
 resource "yandex_lb_network_load_balancer" "default" {
   name = "app"
   type = "external"
-  deletion_protection = "false"
+  deletion_protection = "true"
   listener {
     name = "http-bingo"
     port = 80
@@ -195,9 +195,11 @@ resource "yandex_lb_network_load_balancer" "default" {
     }
   }
 }
+
 output "instance_external_ip_app" {
   value = yandex_compute_instance_group.app.instances.*.network_interface.0.nat_ip_address
 }
+
 output "instance_internal_ip_app" {
   value = yandex_compute_instance_group.app.instances.*.network_interface.0.ip_address
 }
@@ -205,6 +207,7 @@ output "instance_internal_ip_app" {
 output "instance_external_ip_db" {
   value = yandex_compute_instance_group.db.instances.*.network_interface.0.nat_ip_address
 }
+
 output "instance_internal_ip_db" {
   value = yandex_compute_instance_group.db.instances.*.network_interface.0.ip_address
 }
