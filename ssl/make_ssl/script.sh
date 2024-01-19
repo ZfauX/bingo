@@ -34,3 +34,10 @@ chmod og-rwx postgresql2.key
 
 # Certificate generation for the client №2
 openssl x509 -req -in postgresql2.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql2.crt
+
+# Private key generation for the replication client №1
+openssl req -new -nodes -text -out postgresql3.csr -keyout postgresql3.key -subj "/C=RU/ST=Moskovskaya oblast'/L=Volokolamsk/O=Home/OU=IT/CN=postgres"
+chmod og-rwx postgresql3.key
+
+# Certificate generation for the replication client №1
+openssl x509 -req -in postgresql3.csr -text -days 365 -CA root.crt -CAkey root.key -CAcreateserial -out postgresql3.crt
