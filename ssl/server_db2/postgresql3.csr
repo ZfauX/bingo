@@ -1,0 +1,64 @@
+Certificate Request:
+    Data:
+        Version: 1 (0x0)
+        Subject: C = RU, ST = Moskovskaya oblast', L = Volokolamsk, O = Home, OU = IT, CN = postgres
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:d4:53:b5:44:e9:f3:74:d4:9e:88:e0:22:54:a5:
+                    fb:b1:de:6d:05:8b:52:49:82:52:87:3d:83:80:18:
+                    92:14:4a:1c:76:8d:bd:6a:26:e6:52:75:43:c3:76:
+                    bb:20:38:d8:8c:f3:1f:93:f7:f8:bc:4d:fb:d8:d9:
+                    b2:88:12:0d:7a:63:8e:39:ee:bf:ff:1f:5d:67:f0:
+                    ef:fa:b9:b2:c8:fd:77:cf:b9:f1:85:ec:fb:d9:d6:
+                    8c:c5:bb:7d:24:13:8f:1f:74:20:65:87:71:ed:09:
+                    25:c7:b0:1e:bb:54:62:bf:c7:85:0c:43:da:b0:7f:
+                    3d:72:7a:6b:94:b5:54:9e:88:f1:a8:52:23:af:9a:
+                    e0:e0:23:e8:5d:80:d5:3b:46:2c:d0:8f:2e:12:50:
+                    3f:2b:8a:9e:68:16:af:c4:eb:76:69:48:d6:15:1f:
+                    8a:8b:a7:50:17:e4:5d:99:c1:77:11:9b:de:f3:b6:
+                    00:af:88:66:b2:f2:f2:03:67:c5:6c:bd:c0:9f:d5:
+                    fa:ce:f5:bb:db:13:03:67:41:be:22:e7:03:7e:27:
+                    a6:53:fb:f6:2d:d4:c6:a4:69:35:b7:b6:ae:67:a8:
+                    c0:e8:17:d2:aa:73:9f:42:68:95:7a:fe:d0:4e:5d:
+                    59:67:f1:3c:7f:95:f2:71:af:0f:40:b3:f0:e4:f6:
+                    07:73
+                Exponent: 65537 (0x10001)
+        Attributes:
+            (none)
+            Requested Extensions:
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        4d:02:2f:31:1a:64:49:68:08:8b:cf:58:37:e5:a6:e2:ef:91:
+        49:49:54:79:d1:ad:35:59:38:ec:f7:12:21:0f:5b:e9:67:8b:
+        9b:d0:e4:9c:f7:e1:b1:02:f9:7f:8c:01:7e:fa:87:a4:73:07:
+        6d:22:e9:cc:18:72:16:8d:91:df:e4:e4:d1:8b:9f:82:bc:19:
+        2f:bf:16:21:b3:4b:5a:4b:1c:83:ff:27:d4:51:91:bb:93:45:
+        aa:b0:3e:7e:67:d2:e3:30:79:d3:24:45:b4:cd:17:40:d9:b5:
+        da:51:b6:1b:3e:b1:09:83:e6:7d:a4:ba:7c:63:10:09:87:cd:
+        c9:fe:b9:b5:75:78:10:54:36:8a:be:a1:f9:36:36:b3:08:cf:
+        f3:5c:b3:bf:5f:98:42:c9:59:dc:28:4f:d9:e3:54:05:bb:dd:
+        0d:f2:4a:d2:db:2b:bf:fe:67:b4:60:02:d0:e9:00:88:d7:08:
+        be:05:4a:cc:c8:dd:7f:ef:70:5e:d6:14:50:d0:ad:56:f5:b6:
+        7d:33:34:ad:de:81:90:96:a5:a9:33:e8:7f:c2:0b:88:9c:5e:
+        4f:ae:4c:b3:d6:97:44:d8:71:5f:f8:7d:d0:fa:97:f3:d0:97:
+        1e:36:3e:27:35:83:7b:a7:b4:15:b3:8c:c2:f0:92:b3:0e:06:
+        75:2d:af:f0
+-----BEGIN CERTIFICATE REQUEST-----
+MIICtTCCAZ0CAQAwcDELMAkGA1UEBhMCUlUxHDAaBgNVBAgME01vc2tvdnNrYXlh
+IG9ibGFzdCcxFDASBgNVBAcMC1ZvbG9rb2xhbXNrMQ0wCwYDVQQKDARIb21lMQsw
+CQYDVQQLDAJJVDERMA8GA1UEAwwIcG9zdGdyZXMwggEiMA0GCSqGSIb3DQEBAQUA
+A4IBDwAwggEKAoIBAQDUU7VE6fN01J6I4CJUpfux3m0Fi1JJglKHPYOAGJIUShx2
+jb1qJuZSdUPDdrsgONiM8x+T9/i8TfvY2bKIEg16Y4457r//H11n8O/6ubLI/XfP
+ufGF7PvZ1ozFu30kE48fdCBlh3HtCSXHsB67VGK/x4UMQ9qwfz1yemuUtVSeiPGo
+UiOvmuDgI+hdgNU7RizQjy4SUD8rip5oFq/E63ZpSNYVH4qLp1AX5F2ZwXcRm97z
+tgCviGay8vIDZ8VsvcCf1frO9bvbEwNnQb4i5wN+J6ZT+/Yt1MakaTW3tq5nqMDo
+F9Kqc59CaJV6/tBOXVln8Tx/lfJxrw9As/Dk9gdzAgMBAAGgADANBgkqhkiG9w0B
+AQsFAAOCAQEATQIvMRpkSWgIi89YN+Wm4u+RSUlUedGtNVk47PcSIQ9b6WeLm9Dk
+nPfhsQL5f4wBfvqHpHMHbSLpzBhyFo2R3+Tk0YufgrwZL78WIbNLWkscg/8n1FGR
+u5NFqrA+fmfS4zB50yRFtM0XQNm12lG2Gz6xCYPmfaS6fGMQCYfNyf65tXV4EFQ2
+ir6h+TY2swjP81yzv1+YQslZ3ChP2eNUBbvdDfJK0tsrv/5ntGAC0OkAiNcIvgVK
+zMjdf+9wXtYUUNCtVvW2fTM0rd6BkJalqTPof8ILiJxeT65Ms9aXRNhxX/h90PqX
+89CXHjY+JzWDe6e0FbOMwvCSsw4GdS2v8A==
+-----END CERTIFICATE REQUEST-----
