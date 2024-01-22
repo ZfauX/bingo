@@ -54,7 +54,7 @@ $ chmod +x bingo
 $ ./bingo
 _Hello world_
 $ ./bingo --help
-_bingo_
+_bingo
 Usage:
    [flags]
    [command]
