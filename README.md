@@ -42,3 +42,200 @@ https://storage.yandexcloud.net/final-homework/bingo – вот ссылка н�
 - Для SSL, http3 и кеширования мы рекомендуем использовать reverse proxy, которые это поддерживают, например nginx;
 - Некоторый софт не умеет отдавать метрики в формате prometheus, для такого софта сбоку разворачивают что-то, что умеет собрать и отдать за него эти метрики. Гуглить по запросу "<название софта> export metrics".
 
+# Исследование и решения
+
+## Запуск приложения
+
+bash
+$ curl -O https://storage.yandexcloud.net/final-homework/bingo
+$ file bingo
+_bingo: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped_
+$ chmod +x bingo
+$ ./bingo
+_Hello world_
+$ ./bingo --help
+_bingo
+Usage:
+   [flags]
+   [command]
+Available Commands:
+  completion           Generate the autocompletion script for the specified shell
+  help                 Help about any command
+  prepare_db           prepare_db
+  print_current_config print_current_config
+  print_default_config print_default_config
+  run_server           run_server
+  version              version
+Flags:
+  -h, --help   help for this command
+Use " [command] --help" for more information about a command._
+$ ./bingo version
+_20231121T1537_
+$ ./bingo print_current_config
+_Error_
+$ ./bingo print_default_config
+_postgres_cluster:
+  hosts:
+  - address: localhost
+    port: 5432
+  user: postgres
+  password: postgres
+  db_name: postgres
+  ssl_mode: disable
+  use_closest_node: false_
+$ ./bingo print_default_config > bingo.conf
+$ ./bingo run_server --help
+_run_server
+Usage:
+   run_server [flags]
+Flags:
+  -h, --help   help for run_server_
+$ ./bingo run_server 
+_Error_
+$ sudo ./bingo run_server
+_Didn't your mom teach you not to run anything incomprehensible from root?_
+$ strace ./bingo
+$ strace ./bingo print_current_config 
+_found failed access to file /opt/bingo/config.yaml_
+$ sudo mkdir /opt/bingo
+$ ./bingo print_default_config > config.yaml
+$ sudo cp config.yaml /opt/bingo/
+$ ./bingo print_current_config
+$ strace ./bingo run_server
+edit config.yaml
+$ sudo apt instlall postgresql
+$ ./bingo prepare_db 
+$ ./bingo run_server 
+_Error_
+$ strace ./bingo run_server 
+_found failed access to file /opt/bongo/logs/416265556f/main.log_
+$ sudo mkdir -p /opt/bongo/logs/416265556f/
+$ sudo touch /opt/bongo/logs/416265556f/main.log
+$ ./bingo run_server
+_Error_
+$ strace ./bingo run_server 
+_Found insufficient rights on file_
+$ sudo chmod 0666 /opt/bongo/logs/416265556f /main.log
+$ ./bingo run_server
+_30sec startup_
+$ ./bingo run_server &
+$ tail -f /opt/bongo/logs/416265556f /main.log
+
+Получен код:
+
+My congratulations.
+You were able to start the server.
+Here's a secret code that confirms that you did it.
+--------------------------------------------------
+code:         yoohoo_server_launched
+--------------------------------------------------
+
+## Поход в корень
+
+Смотрим открытые порты:
+
+bash
+ss -tunlp # --> ipv4 30164/tcp
+
+Открываем http://localhost:30164
+
+Нашёл код:
+
+Hi. Accept my congratulations. You were able to launch this app.
+In the text of the task, you were given a list of urls and requirements for their work.
+Get on with it. You can do it, you'll do it.
+--------------------------------------------------
+code:         index_page_is_awesome
+--------------------------------------------------
+
+## Web-proxy 
+
+Выбираю прокси. Выбирал между nginx и caddy. У nginx экспериментальная поддержка https/3.
+Принял решение установить и настроить caddy. Реализовал настройки через Caddyfile. Чтобы запускался по умолчанию лежит в /etc/caddy.
+Кэширование из коробки нет. Реализовано с помощью планировщика.
+sudo echo "* * * * * root curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html"; sleep 30; curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html" >> /etc/crontab
+
+## Тесты
+
+Ставлю и пробую wrk. Ранее, кажется при просмотре логов от bingo замечаю наличие библиотеки троттлинга для golang. На тестах замечаю, что RPS от одного сервиса bingo ограничен ~100. Нужно минимум 2 экземпляра для выполнения требований ТЗ по производительности.
+
+Пишу тесты для wrk 
+- tests/api-customer-id.lua
+- tests/api-customer.lua
+- tests/api-movie-id.lua
+- tests/api-movie.lua
+- tests/api-session-id.lua
+- tests/db_dummy.lua
+- tests/operation.lua
+
+Замечаю, что bingo:
+- падает по OOM
+- `I feel bad` вместо pong на healthcheck
+
+Решил реализовывать проект на машинах из 2 лекции. Сервис буду запускать с помощью systemd.
+Пишу unit и healthcheck для сервиса.
+
+### Целевая платформа
+
+Развертывание ВМ, сети, подсети c помощью Terraform.
+
+## Ускорение старта
+
+Сначала я думал, что долгий старт — это норма. При просмотре пакетов через tcpdump. Обнаружил запросы к http://8.8.8.8.
+
+bash
+$ ip route add blackhole 8.8.8.8
+
+Для сохранения правила маршрутизации после перезагрузки. Редактирование файла:
+/etc/netplan/00-installer-config.yaml
+netplan generate
+netplan apply
+
+Приложение начало запускаться значительно быстрее. Получен код:
+
+Congratulations.
+You were able to figure out why
+the application is slow to start and fix it.
+Here's a secret code that confirms that you did it.
+--------------------------------------------------
+code:         google_dns_is_not_http
+--------------------------------------------------
+
+## Avahi - zeroconf локальное разрешение имён (*.local)
+
+$ sudo apt install avahi-daemon
+
+## Оптимизация запросов БД 
+Просматриваю логи базы данных и собираю запросы. Запускаю вручную с профилировкой.
+
+sql
+explain (analyze,verbose on)
+
+Смотрю планы выполнения запросов, добавляю индексы и/или первичные ключи.
+
+### Результат
+
+В итоге оптимизировал исходную таблицу, чтобы повторные запросы не отваливались по таймауту.
+
+Все оптимизации:
+sql
+-- PK
+ALTER TABLE public.sessions ADD CONSTRAINT sessions_pk PRIMARY KEY (id);
+ALTER TABLE public.customers ADD CONSTRAINT customers_pk PRIMARY KEY (id);
+ALTER TABLE public.movies ADD CONSTRAINT movies_pk PRIMARY KEY (id);
+-- Indexes
+CREATE INDEX sessions_movie_id_idx ON public.sessions (movie_id);
+CREATE INDEX movies_year_name_idx ON public.movies (year DESC, name);
+CREATE INDEX customers_surname_idx ON public.customers (surname,name ,birthday DESC,id DESC);
+CREATE INDEX movies_year_idx ON public.movies ("year" DESC, name, id DESC);
+
+## Мониторинг
+
+- Yandex Monitoring для VM (диски, CPU), NLB (пакеты)
+- Grafana+Prometheus для caddy (на домашнем ПК), чтобы следить за RPS, длительностью запросов и ошибками HTTP
+
+## SSL
+
+Реализую подключение приложения к базе данных через ssl.
+-ssl/make_ssl
+
