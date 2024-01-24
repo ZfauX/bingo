@@ -46,13 +46,13 @@ https://storage.yandexcloud.net/final-homework/bingo – вот ссылка н�
 
 ## Запуск приложения
 ```bash
-$ curl -O https://storage.yandexcloud.net/final-homework/bingo
-$ file bingo
+curl -O https://storage.yandexcloud.net/final-homework/bingo
+file bingo
 _bingo: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped_
-$ chmod +x bingo
-$ ./bingo
+chmod +x bingo
+./bingo
 _Hello world_
-$ ./bingo --help
+./bingo --help
 _bingo
 Usage:
    [flags]
@@ -68,11 +68,11 @@ Available Commands:
 Flags:
   -h, --help   help for this command
 Use " [command] --help" for more information about a command._
-$ ./bingo version
+./bingo version
 _20231121T1537_
-$ ./bingo print_current_config
+./bingo print_current_config
 _Error_
-$ ./bingo print_default_config
+./bingo print_default_config
 _postgres_cluster:
   hosts:
   - address: localhost
@@ -82,43 +82,43 @@ _postgres_cluster:
   db_name: postgres
   ssl_mode: disable
   use_closest_node: false_
-$ ./bingo print_default_config > bingo.conf
-$ ./bingo run_server --help
+./bingo print_default_config > bingo.conf
+./bingo run_server --help
 _run_server
 Usage:
    run_server [flags]
 Flags:
   -h, --help   help for run_server_
-$ ./bingo run_server 
+./bingo run_server 
 _Error_
-$ sudo ./bingo run_server
+sudo ./bingo run_server
 _Didn't your mom teach you not to run anything incomprehensible from root?_
-$ strace ./bingo
-$ strace ./bingo print_current_config 
+strace ./bingo
+strace ./bingo print_current_config 
 _found failed access to file /opt/bingo/config.yaml_
-$ sudo mkdir /opt/bingo
-$ ./bingo print_default_config > config.yaml
-$ sudo cp config.yaml /opt/bingo/
-$ ./bingo print_current_config
-$ strace ./bingo run_server
+sudo mkdir /opt/bingo
+./bingo print_default_config > config.yaml
+sudo cp config.yaml /opt/bingo/
+./bingo print_current_config
+strace ./bingo run_server
 edit config.yaml
-$ sudo apt instlall postgresql
-$ ./bingo prepare_db 
-$ ./bingo run_server 
+sudo apt instlall postgresql
+./bingo prepare_db 
+./bingo run_server 
 _Error_
-$ strace ./bingo run_server 
+strace ./bingo run_server 
 _found failed access to file /opt/bongo/logs/416265556f/main.log_
-$ sudo mkdir -p /opt/bongo/logs/416265556f/
-$ sudo touch /opt/bongo/logs/416265556f/main.log
-$ ./bingo run_server
+sudo mkdir -p /opt/bongo/logs/416265556f/
+sudo touch /opt/bongo/logs/416265556f/main.log
+./bingo run_server
 _Error_
-$ strace ./bingo run_server 
+strace ./bingo run_server 
 _Found insufficient rights on file_
-$ sudo chmod 0666 /opt/bongo/logs/416265556f /main.log
-$ ./bingo run_server
+sudo chmod 0666 /opt/bongo/logs/416265556f /main.log
+./bingo run_server
 _30sec startup_
-$ ./bingo run_server &
-$ tail -f /opt/bongo/logs/416265556f /main.log
+./bingo run_server &
+tail -f /opt/bongo/logs/416265556f /main.log
 ```
 
 Получен код:
@@ -154,7 +154,7 @@ code:         index_page_is_awesome
 Принял решение установить и настроить caddy. Реализовал настройки через Caddyfile. Чтобы запускался по умолчанию лежит в /etc/caddy.
 Кэширование из коробки нет. Реализовано с помощью планировщика.
 ```bash
-$ sudo echo "* * * * * root curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html"; sleep 30; curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html" >> /etc/crontab
+sudo echo "* * * * * root curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html"; sleep 30; curl http://localhost:30164/long_dummy -o ~/bingo/caddy/cache_html/index.html" >> /etc/crontab
 ```
 ## Тесты
 
@@ -185,7 +185,7 @@ $ sudo echo "* * * * * root curl http://localhost:30164/long_dummy -o ~/bingo/ca
 Сначала я думал, что долгий старт — это норма. При просмотре пакетов через tcpdump. Обнаружил запросы к http://8.8.8.8.
 
 ```bash
-$ ip route add blackhole 8.8.8.8
+ip route add blackhole 8.8.8.8
 ```
 Для сохранения правила маршрутизации после перезагрузки. Редактирование файла:
 /etc/netplan/00-installer-config.yaml
@@ -205,7 +205,7 @@ code:         google_dns_is_not_http
 ```
 ## Avahi - zeroconf локальное разрешение имён (*.local)
 ```bash
-$ sudo apt install avahi-daemon
+sudo apt install avahi-daemon
 ```
 ## Оптимизация запросов БД 
 Просматриваю логи базы данных и собираю запросы. Запускаю вручную с профилировкой.
@@ -221,7 +221,6 @@ explain (analyze,verbose on)
 
 Все оптимизации:
 ```
-sql
 -- PK
 ALTER TABLE public.sessions ADD CONSTRAINT sessions_pk PRIMARY KEY (id);
 ALTER TABLE public.customers ADD CONSTRAINT customers_pk PRIMARY KEY (id);
@@ -240,5 +239,5 @@ CREATE INDEX movies_year_idx ON public.movies ("year" DESC, name, id DESC);
 ## SSL
 
 Реализую подключение приложения к базе данных через ssl.
--ssl/make_ssl
+- ssl/make_ssl
 
