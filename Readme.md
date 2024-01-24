@@ -47,6 +47,9 @@ https://storage.yandexcloud.net/final-homework/bingo – вот ссылка н�
 ## Запуск приложения
 bash
 $ curl -O https://storage.yandexcloud.net/final-homework/bingo
+
+bash
+$ curl -O https://storage.yandexcloud.net/final-homework/bingo
 $ file bingo
 _bingo: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, with debug_info, not stripped_
 $ chmod +x bingo
