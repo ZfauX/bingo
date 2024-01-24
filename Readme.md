@@ -46,7 +46,7 @@ https://storage.yandexcloud.net/final-homework/bingo – вот ссылка н�
 
 ## Запуск приложения
 bash
-$ curl -O https://storage.yandexcloud.net/final-homework/bingo
+curl -O https://storage.yandexcloud.net/final-homework/bingo
 
 bash
 $ curl -O https://storage.yandexcloud.net/final-homework/bingo
