@@ -1,0 +1,93 @@
+- hosts: db-02.local
+  become: true
+  become_method: sudo
+  tasks:
+    - name: "Update packages and upgrade"
+      apt:
+        update_cache: true
+        upgrade: dist
+        force_apt_get: true
+    - name: "Set a hostname"
+      ansible.builtin.hostname:
+        name: db-02
+        use: systemd
+    - name: "Install a list of packages"
+      ansible.builtin.apt:
+        pkg:
+        - avahi
+        - postgresql
+        - git
+    - name: "Clone repo"
+      ansible.builtin.git:
+        repo: https://github.com/ZfauX/bingo.git
+        dest: /home/ubuntu
+    - name: "Copy Cert File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/server_db2/server2.crt
+        dest: /etc/ssl/certs/server.crt
+        mode: 0644
+        owner: postgres
+        group: postgres
+    - name: "Copy Key File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/server_db2/server2.key
+        dest: /etc/ssl/private/server.key
+        mode: 0600
+        owner: postgres
+        group: postgres  
+    - name: "Copy Cert File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/root/root.crt
+        dest: /etc/ssl/private/root.crt
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Copy Cert File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/server_db2/postgresql3.crt
+        dest: /home/ubuntu/.postgresql/postgresql.crt
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Copy Key File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/server_db2/postgresql3.key
+        dest: /home/ubuntu/.postgresql/postgresql.key
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu  
+   - name: "Copy Cert File If Different"
+     copy:
+        src: /home/ubuntu/bingo/ssl/root/root.crt
+        dest: /home/ubuntu/.postgresql/root.crt
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu     
+    - name: "Copy config File If Different"
+      copy:
+        src: /home/ubuntu/bingo/postgresql/slave/pg_hba.conf
+        dest: /etc/postgresql/14/main/pg_hba.conf
+        mode: 0644
+        owner: postgres
+        group: postgres
+    - name: "Copy config File If Different"
+      copy:
+        src: /home/ubuntu/bingo/postgresql/slave/postgresql.conf
+        dest: /etc/postgresql/14/main/postgresql.conf
+        mode: 0644
+        owner: postgres
+        group: postgres  
+    - name: "Copy signal File If Different"
+      copy:
+        src: /home/ubuntu/bingo/postgresql/slave/standby.signal
+        dest: /etc/postgresql/14/main/standby.signal
+        mode: 0644
+        owner: postgres
+        group: postgres
+    - name: "Restart service postgresql on ubuntu, in all cases, also issue daemon-reload to pick up config changes"
+      ansible.builtin.systemd_service:
+        state: restarted
+        daemon_reload: true
+        name: postgresql    
+    - name: "Execute the command in remote shell; stdout goes to the specified file on the remote"
+      ansible.builtin.shell: /lib/postgresql/14/bin/pg_basebackup -D /var/lib/postgresql/14/main/ -h db-01.local -p 5432 -Xs -R -P

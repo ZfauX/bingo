@@ -1,0 +1,106 @@
+- hosts: app-02.local
+  become: true
+  become_method: sudo
+  tasks:
+    - name: "Update packages and upgrade"
+      apt:
+        update_cache: true
+        upgrade: dist
+        force_apt_get: true
+    - name: "Set a hostname"
+      ansible.builtin.hostname:
+        name: app-02
+        use: systemd
+    - name: "Install a list of packages"
+      ansible.builtin.apt:
+        pkg:
+        - avahi
+        - caddy
+        - git
+    - name: "Clone repo"
+      ansible.builtin.git:
+        repo: https://github.com/ZfauX/bingo.git
+        dest: /home/ubuntu
+    - name: "Create Directories"
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0755
+      loop:
+        - '/opt/bingo/'
+        - '/opt/bongo/logs/416265556f'
+    - name: "Copy Cert File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/client2/postgresql2.crt
+        dest: /home/ubuntu/.postgresql/postgresql.crt
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Copy Key File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/client2/postgresql2.key
+        dest: /home/ubuntu/.postgresql/postgresql.key
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu  
+   - name: "Copy Cert File If Different"
+      copy:
+        src: /home/ubuntu/bingo/ssl/root/root.crt
+        dest: /home/ubuntu/.postgresql/root.crt
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu     
+    - name: "Copy unit File If Different"
+      copy:
+        src: /home/ubuntu/bingo/app/bingo.service
+        dest: /etc/systemd/system/bingo.service
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Copy config File If Different"
+      copy:
+        src: /home/ubuntu/bingo/app/config.yaml
+        dest: /opt/bingo/config.yaml
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu  
+    - name: "Copy config File If Different"
+      copy:
+        src: /home/ubuntu/bingo/caddy/Caddyfile
+        dest: /etc/caddy/Caddyfile
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Copy config File If Different"
+      copy:
+        src: /home/ubuntu/bingo/netplan/00-installer-config.yaml
+        dest: /etc/netplan/00-installer-config.yaml 
+        mode: 0644
+        owner: ubuntu
+        group: ubuntu
+    - name: "Execute the command in remote shell; stdout goes to the specified file on the remote"
+      ansible.builtin.shell: netplan apply
+    - name: "Change file ownership, group and permissions"
+      ansible.builtin.file:
+        path: /home/ubuntu/bingo/app/bingo
+        owner: ubuntu
+        group: ubuntu
+        mode: '0744'
+    - name: "Just force systemd to reread configs"
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+    - name: "Restart service postgresql on ubuntu, in all cases, also issue daemon-reload to pick up config changes"
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: network-manager
+    - name: "Restart service postgresql on ubuntu, in all cases, also issue daemon-reload to pick up config changes"
+      ansible.builtin.systemd_service:
+        state: restarted
+        name: caddy
+    - name: "Make sure a service unit is running"
+      ansible.builtin.systemd_service:
+        state: started
+        name: bingo
+        enabled: true
